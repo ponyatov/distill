@@ -68,6 +68,7 @@ class Frame:
         if not depth: Frame._dumped = []
         if self in Frame._dumped: return tree + ' _/'
         else: Frame._dumped.append(self)
+        for i in self.slot: tree += self.slot[i].test(depth+1,prefix=i+' ')
         for j in self.nest: tree += j.test(depth+1)
         return tree
     
