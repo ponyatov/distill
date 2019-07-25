@@ -1,7 +1,10 @@
+## metaL/py : homoiconic metaprogramming system
+## (c) Dmitry Ponyatov <dponyatov@gmail.com> CC BY-NC-ND
+## wiki: https://github.com/ponyatov/metaL/wiki
 
 import os,sys
 
-########################################## Marvin Minsky frame model /extended/
+############################################ extended Marvin Minsky frame model
 
 class Frame:
     
