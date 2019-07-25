@@ -39,25 +39,57 @@ class Frame:
     
     ## operator
 
+    ## ` that = this[key] `
     def __getitem__(self,key):
         return self.slot[key]
+    ## ` this[key] = that ` 
     def __setitem__(self,key,that):
         self.slot[key] = that ; return self
+    ## ` this << that `
     def __lshift__(self,that):
         self[that.val] = that ; return self
     def has(self,key):
         return key in self.slot
+    ## ` this // that `
     def __floordiv__(self,that):
-        self.nest.append(that) ; return self
+        return self.push(that)
         
     ## stack
     
+    ## ` ( ... -- ) ` clear
     def dropall(self):
         self.nest = [] ; return self
+    ## ` ( -- a ) `
+    def push(self,that):
+        self.nest.append(that) ; return self
+    ## ` ( a b -- a ) `
     def pop(self):
-        return self.nest.pop()
+        return self.nest.pop(-1) # b
+    ## ` ( a b -- b ) `
+    def pip(self):
+        return self.nest.pop(-2) # a
+    ## ` ( a b -- a b ) `
     def top(self):
-        return self.nest[-1]
+        return self.nest[-1] # b
+    ## ` ( a b -- a b ) `
+    def tip(self):
+        return self.nest[-2] # a
+
+    ## ` ( a - a a ) `
+    def dup(self):
+        return self // self.top()
+    ## ` ( a b -- a ) `
+    def drop(self):
+        self.pop() ; return self
+    ## ` ( a b -- b a ) `
+    def swap(self):
+        return self // self.pip()
+    ## ` ( a b -- a b a ) `
+    def over(self):
+        return self // self.tip()
+    ## ` ( a b -- b ) `
+    def press(self):
+        self.pip() ; return self
     
     ## execute & codegen
     
